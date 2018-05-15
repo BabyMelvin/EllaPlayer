@@ -17,7 +17,12 @@ SOURCES += main.cpp\
     eapacketqueue.cpp \
     eaaudio.cpp \
     eavideo.cpp \
-    eaclock.cpp
+    eaclock.cpp \
+    eaframe.cpp \
+    eaframequeue.cpp \
+    eaavpackagelist.cpp \
+    eaplayer.cpp \
+    eadecoder.cpp
 
 INCLUDEPATH += $$PWD/ffmpeg/include
 
@@ -36,6 +41,11 @@ HEADERS  += mainwindow.h \
     eapacketqueue.h \
     eaaudio.h \
     eavideo.h \
-    eaclock.h
+    eaclock.h \
+    eaframe.h \
+    eaframequeue.h \
+    eaavpackagelist.h \
+    eaplayer.h \
+    eadecoder.h
 
 FORMS    += mainwindow.ui

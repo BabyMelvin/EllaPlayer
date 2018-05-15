@@ -8,10 +8,8 @@ EaClock::EaClock()
 
 }
 
-EaClock::EaClock(int *queueSerial)
+EaClock::EaClock(int *queueSerial):speed(1.0),paused(0)
 {
-    this->speed=1.0;
-    this->paused=0;
     this->queueSerial=queueSerial;
     setClock(this,NAN,-1);
 }
