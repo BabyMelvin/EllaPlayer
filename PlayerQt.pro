@@ -13,7 +13,11 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    eapacketqueue.cpp \
+    eaaudio.cpp \
+    eavideo.cpp \
+    eaclock.cpp
 
 INCLUDEPATH += $$PWD/ffmpeg/include
 
@@ -28,6 +32,10 @@ LIBS    += $$PWD/ffmpeg/lib/avcodec.lib \
             $$PWD/ffmpeg/lib/swresample.lib \
             $$PWD/ffmpeg/lib/swscale.lib
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    eapacketqueue.h \
+    eaaudio.h \
+    eavideo.h \
+    eaclock.h
 
 FORMS    += mainwindow.ui

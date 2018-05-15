@@ -32,6 +32,7 @@ private:
     void initUi();
     void initFfmpeg();
 
+
     Ui::MainWindow *ui;
 };
 
