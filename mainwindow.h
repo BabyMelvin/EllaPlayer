@@ -29,6 +29,9 @@ public:
     ~MainWindow();
 
 private:
+    void initUi();
+    void initFfmpeg();
+
     Ui::MainWindow *ui;
 };
 

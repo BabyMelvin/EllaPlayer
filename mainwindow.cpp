@@ -10,11 +10,20 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    initFfmpeg();
     avformat_network_init();
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::initUi()
+{
+
+}
+
+void MainWindow::initFfmpeg()
+{
+
 }
