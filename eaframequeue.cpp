@@ -26,7 +26,7 @@ EaFrameQueue::EaFrameQueue(EaPacketQueue* pktq,int maxSize,int keepLast)
     this->maxSize=FFMIN(maxSize,FRAME_QUEUE_SIZE);
     this->keepLast=!!keepLast;
     for(i=0;i<this->maxSize;i++){
-       if(!(this->queue[i]=av_frame_alloc())){
+       if(!(this->queue[i]==av_frame_alloc())){
           return AVERROR(ENOMEM);
        }
     }
@@ -112,15 +112,15 @@ void EaFrameQueue::frameQueuePush()
    this->mutex->unlock();
 }
 
-int EaFrameQueue::frameQueueNBRemaining()
+int EaFrameQueue::frameQueueNBRemaining(EaFrameQueue*f)
 {
-    return this->size-this->rindexShown;
+    return f->size-f->rindexShown;
 }
 
 int64_t EaFrameQueue::frameQueueLastPos(EaFrameQueue* f)
 {
    EaFrame* fp=&f->queue[f->rindex] ;
-   if(f->rindexShow&&fp->serial==f->pktq->serial){
+   if(f->rindexShown&&fp->serial==f->pktq->serial){
       return fp->pos;
    }else{
        return -1;
@@ -134,7 +134,7 @@ void EaFrameQueue::frameQueueNext(EaFrameQueue* f)
        return;
    }
    // todo
-   frameQueueUnrefItem(this->queue[f->rindex]);
+   frameQueueUnrefItem(&this->queue[f->rindex]);
    if(++f->rindex==f->maxSize){
       f->rindex=0;
    }
