@@ -31,9 +31,15 @@ class EaPlayer:public QObject
 {
     Q_OBJECT
     static int      startupVolume;
-    static int      av_sync_type = AV_SYNC_AUDIO_MASTER;
-    static int64_t  start_time   = AV_NOPTS_VALUE;
+    static int      avSyncType = AV_SYNC_AUDIO_MASTER;
+    static int64_t  startTime   = AV_NOPTS_VALUE;
     static int64_t  duration     = AV_NOPTS_VALUE;
+    static int genpts;
+    static int findStreamInfo;
+    static int seekByBytes;
+    static int showStauts;
+    static const char* wantedStreamSpec[AVMEDIA_TYPE_NB];
+    static int infiniteBuffer=-1;
 public:
     EaPlayer();
     EaPlayer(char*fileName,AVInputFormat*inputFormat);
@@ -44,6 +50,11 @@ signals:
    void resultReadThread(const QString&result);
 private:
     void streamComponentClose(int streamIndex);
+    int decodeInterruptCb(void*arg);
+    bool isRealtime(AVFormatContext*s);
+    int streamComponentOpen(int stIndex);
+    void stepNextFrame();
+
     QThread* readTid;
     AVInputFormat* iformat;
     int abortRequest;
@@ -150,10 +161,20 @@ private:
 #endif
     int lastVideoStream,lastAudioStream,lastSubtitleStream;
     QWaitCondition* continueReadThread;
+    QString windowTile;
+    int videoDisable;
+    int audioDisable;
+    int subtitleDisable;
 };
 
 static int EaPlayer::startupVolume=100;
-static int EaPlayer::av_sync_type = AV_SYNC_AUDIO_MASTER;
-static int64_t EaPlayer::start_time = AV_NOPTS_VALUE;
+static int EaPlayer::avSyncType = AV_SYNC_AUDIO_MASTER;
+static int64_t EaPlayer::startTime = AV_NOPTS_VALUE;
 static int64_t EaPlayer::duration = AV_NOPTS_VALUE;
+static int EaPlayer::genpts=0;
+static int EaPlayer::findStreamInfo=1;
+static int EaPlayer::seekByBytes=-1;
+static int EaPlayer::showStauts=1;
+static const char* EaPlayer::wantedStreamSpec={0};
+static int EaPlayer::infiniteBuffer=-1;
 #endif // EAPLAYER_H

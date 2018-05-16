@@ -10,10 +10,10 @@ public:
     ~EaClock();
 
     double getClock(EaClock *c);
-    void setClockAt(EaClock*c,double pts,int serial,double time);
-    void setClock(EaClock*c,double pts,int serial);
-    void setClockSpeed(EaClock*c,double speed);
-    void syncClockSlave(EaClock*c,EaClock*salve);
+    void setClockAt(double pts,int serial,double time);
+    void setClock(double pts,int serial);
+    void setClockSpeed(double speed);
+    void syncClockSlave(EaClock*salve);
 
 private:
     // clock base

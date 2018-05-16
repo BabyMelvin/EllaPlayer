@@ -11,7 +11,7 @@ EaClock::EaClock()
 EaClock::EaClock(int *queueSerial):speed(1.0),paused(0)
 {
     this->queueSerial=queueSerial;
-    setClock(this,NAN,-1);
+    setClock(NAN,-1);
 }
 
 EaClock::~EaClock()
@@ -32,32 +32,32 @@ double EaClock::getClock(EaClock *c)
     }
 }
 
-void EaClock::setClockAt(EaClock *c, double pts, int serial, double time)
+void EaClock::setClockAt(double pts, int serial, double time)
 {
-   c->pts=pts;
-   c->lastUpdated=time;
-   c->ptsDrift=c->pts-time;
-   c->serial=serial;
+   this->pts=pts;
+   this->lastUpdated=time;
+   this->ptsDrift=c->pts-time;
+   this->serial=serial;
 }
 
-void EaClock::setClock(EaClock *c, double pts, int serial)
+void EaClock::setClock(double pts, int serial)
 {
    double time=av_gettime_relative()/10000000.0;
-   setClockAt(c,pts,serial,time);
+   setClockAt(pts,serial,time);
 }
 
-void EaClock::setClockSpeed(EaClock *c, double speed)
+void EaClock::setClockSpeed(double speed)
 {
-    setClock(c,getClock(c),c->serial);
-    c->speed=speed;
+    setClock(getClock(c),c->serial);
+    this->speed=speed;
 }
 
-void EaClock::syncClockSlave(EaClock *c, EaClock *slave)
+void EaClock::syncClockSlave(EaClock *slave)
 {
     double clock=getClock(c);
     double slaveClock=getClock(slave);
     if(!isnan(slaveClock)&&(isnan(clock)||fabs(clock-slaveClock))){
-       setClock(c,slaveClock,slave->serial);
+       setClock(slaveClock,slave->serial);
     }
 }
 
